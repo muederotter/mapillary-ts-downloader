@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leaflet Map</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"
+        />
+        <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+      </head>
+  <body>
+    <div id="map"></div>
+    <div id="inputs">
+      <label for="min-lon">Min Lon:</label>
+      <input type="number" id="min-lon" step="any" /><br />
+      <label for="min-lat">Min Lat:</label>
+      <input type="number" id="min-lat" step="any" /><br />
+      <label for="max-lon">Max Lon:</label>
+      <input type="number" id="max-lon" step="any" /><br />
+      <label for="max-lat">Max Lat:</label>
+      <input type="number" id="max-lat" step="any" /><br />
+      <label for="api-key">API Key:</label>
+      <input type="text" id="api-key" /><br />
+      <button id="select-area">Select Area</button>
+      <button id="get-data">Get Data</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
