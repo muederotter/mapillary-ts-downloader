@@ -55,6 +55,7 @@ document.getElementById("get-data").addEventListener("click", () => {
   );
 
   source.onmessage = (event) => {
+    document.getElementById('progress').innerHTML = event.data;
     console.log(event.data);
     if (event.data === "Done!") {
       source.close();

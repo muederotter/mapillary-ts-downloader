@@ -1,5 +1,6 @@
 import requests, math
 from vt2geojson.tools import vt_bytes_to_geojson
+import datetime as dt
 
 class ts_data:
     def __init__(self, access_token:str, bbox:list) -> None:
@@ -27,11 +28,16 @@ class ts_data:
         Makes the API Requests and saves Coordinates and Value of the street signs to a dictionary.
         """
         data_temp = {"from": [self.llx,self.lly], "to": [self.urx,self.ury], "features": []}
+        
         i=0
+        percent = 0
+        start_time = dt.datetime.now()
         for x in range(min(self.llx,self.urx),max(self.llx,self.urx),1):
             for y in range(min(self.lly,self.ury),max(self.lly,self.ury),1):
                 i+=1
-                yield f"data:Step {i}/{self.number_of_steps}\n\n"
+                estimated_time = str(((dt.datetime.now()-start_time)/i)*(self.number_of_steps-i)).split(".")[0]
+                percent = round((i/self.number_of_steps)*100, 2)
+                yield f"data:{percent}% - {estimated_time} remaining\n\n"
                 # API does not take coordinats as input, instead Mapillary, like Open Street Map, uses tilenames.
                 # https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
                 # For each Tile a new request has to be made.
@@ -43,6 +49,7 @@ class ts_data:
                     if f["properties"]!={}: # Sometimes features don't have properties, don't return those.
                         f_strip = {"coordinates": f["geometry"]["coordinates"], "value": f["properties"]["value"]}
                         data_temp["features"].append(f_strip)
+                        data_temp["to"] = [x,y]
         self.data = data_temp
         yield "data:Done!\n\n" # Tells the script.js that it can now call the data.
     
